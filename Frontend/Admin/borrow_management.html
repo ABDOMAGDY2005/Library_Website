@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Borrow Management | Kaer Morhen Library</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="admin-common-styles.css" />
+    <link rel="stylesheet" href="borrow_management.css" />
+</head>
+<body>
+    <!-- Mobile Menu Button -->
+    <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <i class="fas fa-bars"></i>
+    </button>
+    
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-icon">
+                    <i class="fa-brands fa-wolf-pack-battalion"></i>
+                </div>
+                <div>
+                    <div class="logo-text">Kaer Morhen</div>
+                    <div class="admin-role">Administrator</div>
+                </div>
+                <!-- Mobile Close Button -->
+                <button class="mobile-close-btn" id="mobileCloseBtn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Main</div>
+                    <a href="../Home/home.html" class="nav-item">
+                        <i class="fas fa-home nav-icon"></i>
+                        <span class="nav-text">Home</span>
+                    </a>
+                    <a href="dashboard.html" class="nav-item">
+                        <i class="fa-solid fa-gauge"></i>
+                        <span class="nav-text">Dashboard</span>
+                    </a>
+                    <a href="member_management.html" class="nav-item">
+                        <i class="fas fa-users nav-icon"></i>
+                        <span class="nav-text">Member Manage</span>
+                    </a>
+                    <a href="books_management.html" class="nav-item">
+                        <i class="fas fa-book nav-icon"></i>
+                        <span class="nav-text">Book Manage</span>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Operations</div>
+                    <a href="reservations.html" class="nav-item">
+                        <i class="fas fa-bookmark nav-icon"></i>
+                        <span class="nav-text">Reservations</span>
+                    </a>
+                    <a href="borrow_management.html" class="nav-item active">
+                        <i class="fas fa-exchange-alt nav-icon"></i>
+                        <span class="nav-text">Borrows</span>
+                    </a>
+                </div>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="admin-profile">
+                    <div class="admin-avatar">AM</div>
+                    <div class="admin-info">
+                        <h4>Admin Master</h4>
+                        <p>Super Administrator</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-header">
+                <div class="header-left">
+                    <h1>Borrow Management</h1>
+                    <p>Track borrowed books, returns, and overdue fines</p>
+                </div>
+
+                <div class="header-right">
+                    <button class="logout-btn" onclick="logout()" title="Logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </header>
+
+            <div class="dashboard-content">
+                <!-- Stats Cards -->
+              <div class="stats-grid">
+                  <div class="stat-card animate-card delay-1">
+                      <div class="stat-icon members"> <!-- CHANGED: icon-borrowed → members -->
+                          <i class="fas fa-book-reader"></i>
+                      </div>
+                      <div class="stat-info">
+                          <div class="stat-title">Active Borrows</div>
+                          <div class="stat-value" id="activeCount">...</div>
+                          <div class="stat-change positive">
+                              <i class="fas fa-bookmark"></i> Currently borrowed
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="stat-card animate-card delay-2">
+                      <div class="stat-icon fines"> <!-- CHANGED: icon-overdue → fines -->
+                          <i class="fas fa-exclamation-triangle"></i>
+                      </div>
+                      <div class="stat-info">
+                          <div class="stat-title">Current Overdues</div>
+                          <div class="stat-value" id="overdueCount">...</div>
+                          <div class="stat-change negative">
+                              <i class="fas fa-clock"></i> Overdue books
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="stat-card animate-card delay-3">
+                      <div class="stat-icon loans"> <!-- CHANGED: icon-returned → loans -->
+                          <i class="fas fa-undo"></i>
+                      </div>
+                      <div class="stat-info">
+                          <div class="stat-title">Returned</div>
+                          <div class="stat-value" id="returnedCount">...</div>
+                          <div class="stat-change positive">
+                              <i class="fas fa-check-circle"></i> Successfully returned
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="stat-card animate-card delay-4">
+                      <div class="stat-icon books"> <!-- CHANGED: fines → books -->
+                          <i class="fas fa-dollar-sign"></i>
+                      </div>
+                      <div class="stat-info">
+                          <div class="stat-title">Total Fines</div>
+                          <div class="stat-value" id="totalFines">$...</div>
+                          <div class="stat-change negative">
+                              <i class="fas fa-exclamation-circle"></i> Unpaid fines
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+                <!-- Tabs -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">All Borrow Records</h2>
+                        <div class="tabs">
+                            <button class="tab-btn active" onclick="filterLoans('all')">All</button>
+                            <button class="tab-btn" onclick="filterLoans('active')">Active</button>
+                            <button class="tab-btn" onclick="filterLoans('overdue')">Overdue</button>
+                            <button class="tab-btn" onclick="filterLoans('returned')">Returned</button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-container">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>#ID</th>
+                                        <th>User</th>
+                                        <th>Book</th>
+                                        <th>Borrow Date</th>
+                                        <th>Due Date</th>
+                                        <th>Status</th>
+                                        <th>Fines</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="loansTableBody">
+                                    <!-- Data will be populated by JavaScript -->
+                                    <tr>
+                                        <td colspan="7" style="text-align:center;">Loading...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal for Loan Details -->
+    <div id="newLoanModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Loan Details</h3>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- Modal content will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Overlay -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <!-- Scripts -->
+    <script src="borrow_management.js"></script>
+    <script src="../General/auth.js"></script>
+    <script src="../General/mobile-menu.js"></script>
+    <script>
+        // Check authentication
+        document.addEventListener('DOMContentLoaded', function() {
+            if(!isLoggedIn() || localStorage.getItem('is_admin') != 1){
+                window.location.href = "../Home/home.html";
+            }
+        });
+    </script>
+</body>
+</html>

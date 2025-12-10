@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Kaer Morhen</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="./login.css">
+</head>
+<body>
+
+    <div class="login-wrapper">
+        <div class="login-card">
+            <div class="brand-logo">
+                <i class="fa-brands fa-wolf-pack-battalion"></i>
+                <span>Kaer Morhen</span>
+                <i class="fa-brands fa-wolf-pack-battalion"></i>
+            </div>
+            
+            <h2>Welcome Back</h2>
+            <p class="subtitle">Please login to your account</p>
+
+            <form id="loginForm">
+                <div class="input-group">
+                    <label>Email Address</label>
+                    <div class="input-field">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="email" placeholder="Enter your email" required>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Password</label>
+                    <div class="input-field">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" placeholder="Enter your Password" required>
+                    </div>
+                </div>
+
+                <div id="errorMessage" class="error-message"></div>
+
+                <button type="submit" class="btn-login" id="loginBtn">
+                    Login <i class="fas fa-arrow-right"></i>
+                </button>
+            </form>
+
+            <div class="form-footer">
+                <p>New To Our World? <a href="register.html">Sign up</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="../General/auth.js"></script>
+    <script>
+        // if logged in redirect
+        if(isLoggedIn()){
+            window.location.href = "../Member/dashboard.html";
+        }
+
+        document.getElementById("loginForm").addEventListener("submit", async function(e) {
+            e.preventDefault(); // prevent form submission
+
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value.trim();
+            const errorMessage = document.getElementById("errorMessage");
+
+            // Simple validation
+            if (email === "" || password === "") {
+                errorMessage.textContent = "Please enter both email and password.";
+                return;
+            }
+
+            try {
+                // Call your login API
+                const response = await fetch("http://localhost:3000/api/auth/login", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json();
+
+                // Invalid credentials
+                if (!response.ok) {
+                    errorMessage.textContent = data.error || "Invalid email or password.";
+                    return;
+                }
+
+                // Valid login → store data in localStorage
+                localStorage.setItem("userEmail", email);
+                localStorage.setItem("userPassword", password);
+                localStorage.setItem("is_admin", data.is_Admin);
+
+                // Redirect to dashboard
+                window.location.href = "../Member/dashboard.html";
+
+            } catch (err) {
+                console.error(err);
+                errorMessage.textContent = "Unable to connect to server.";
+            }
+        });
+    </script>
+</body>
+</html>

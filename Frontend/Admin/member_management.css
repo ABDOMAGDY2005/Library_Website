@@ -1,0 +1,109 @@
+/* member_management.css - Page-specific styles only */
+.stats-grid {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+/* Custom stat icons for this page */
+.stat-card:nth-child(1) .stat-icon {
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+}
+
+.stat-card:nth-child(2) .stat-icon {
+    background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.stat-card:nth-child(3) .stat-icon {
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+}
+
+/* Member type badges */
+.member-type-badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    display: inline-block;
+    text-align: center;
+    min-width: 80px;
+}
+
+.member-type-badge.admin {
+    background-color: #e6f7ff;
+    color: #1890ff;
+    border: 1px solid #91d5ff;
+}
+
+.member-type-badge.normal-member {
+    background-color: #f6ffed;
+    color: #52c41a;
+    border: 1px solid #b7eb8f;
+}
+
+/* Member info styling */
+.member-info {
+    display: flex;
+    align-items: center;
+}
+
+.member-name {
+    font-weight: 500;
+    color: #262626;
+}
+
+/* Loading state */
+.loading-spinner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    color: var(--gray);
+}
+
+.loading-spinner i {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Empty state */
+.empty-state {
+    text-align: center;
+    padding: 3rem;
+    color: var(--gray);
+}
+
+.empty-state i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+/* Responsive adjustments for the table */
+@media (max-width: 768px) {
+    .data-table {
+        font-size: 0.85rem;
+    }
+    
+    .data-table th,
+    .data-table td {
+        padding: 0.75rem 0.5rem;
+    }
+    
+    .member-type-badge {
+        padding: 3px 8px;
+        font-size: 11px;
+        min-width: 70px;
+    }
+}
+
+@media (max-width: 480px) {
+    .data-table {
+        display: block;
+        overflow-x: auto;
+    }
+    
+    .member-type-badge {
+        min-width: 60px;
+        padding: 2px 6px;
+    }
+}

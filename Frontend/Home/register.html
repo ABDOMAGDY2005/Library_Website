@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | Kaer Morhen</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./register.css">
+</head>
+<body>
+
+    <div class="register-wrapper">
+        <div class="register-card">
+            <div class="brand-logo">
+                <i class="fa-brands fa-wolf-pack-battalion"></i>
+                <span>Kaer Morhen</span>
+                <i class="fa-brands fa-wolf-pack-battalion"></i>
+            </div>
+            
+            <h2>Create Account</h2>
+            <p class="subtitle">Join our world today!</p>
+
+            <form id="registerForm">
+                <div class="input-group">
+                    <label>Full Name</label>
+                    <div class="input-field">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="userName" placeholder="Abdo Magdy" required>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Email Address</label>
+                    <div class="input-field">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="email" placeholder="abdo@example.com" required>
+                    </div>
+                    <small id="emailError" class="error-text"></small>
+                </div>
+
+                <div class="input-group">
+                    <label>Birth Date</label>
+                    <div class="input-field">
+                        <i class="fas fa-calendar"></i>
+                        <input type="date" id="birthDate" required>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Password</label>
+                    <div class="input-field">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" placeholder="Create a Password" required>
+                    </div>
+                    <div class="strength-meter">
+                        <div class="strength-bar" id="strengthBar"></div>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Confirm Your Password</label>
+                    <div class="input-field">
+                        <i class="fas fa-check-circle"></i>
+                        <input type="password" id="confirmPassword" placeholder="Repeat Your Password" required>
+                    </div>
+                    <small id="passError" class="error-text"></small>
+                </div>
+
+                <div id="generalError" class="error-message"></div>
+
+                <button type="submit" class="btn-register" id="registerBtn">
+                    Register <i class="fas fa-user-plus"></i>
+                </button>
+            </form>
+
+            <div class="form-footer">
+                <p>Already a Member? <a href="login.html">Login here</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="../General/auth.js"></script>
+    <script>
+        // if logged in redirect
+        if(isLoggedIn()){
+            window.location.href = "../Member/dashboard.html";
+        }
+
+        // register.js
+        document.getElementById("registerForm").addEventListener("submit", async function(e) {
+            e.preventDefault();
+
+            const userName = document.getElementById("userName").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const birthDate = document.getElementById("birthDate").value;
+            const password = document.getElementById("password").value;
+            const confirmPassword = document.getElementById("confirmPassword").value;
+
+            const emailError = document.getElementById("emailError");
+            const passError = document.getElementById("passError");
+            const generalError = document.getElementById("generalError");
+
+            // Clear previous errors
+            emailError.textContent = "";
+            passError.textContent = "";
+            generalError.textContent = "";
+
+            // Basic validation
+            if (!userName || !email || !birthDate || !password || !confirmPassword) {
+                generalError.textContent = "All fields are required.";
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                passError.textContent = "Passwords do not match.";
+                return;
+            }
+
+            try {
+                // Call the register API
+                const response = await fetch("http://localhost:3000/api/auth/register", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        name: userName,
+                        email,
+                        birth_date: birthDate,
+                        password
+                    })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    if (response.status === 409) {
+                        emailError.textContent = data.error; // Email already exists
+                    } else {
+                        generalError.textContent = data.error || "Registration failed.";
+                    }
+                    return;
+                }
+
+                // Save login info (optional)
+                localStorage.setItem("userEmail", email);
+                localStorage.setItem("userPassword", password);
+                localStorage.setItem("is_admin", false);
+
+                window.location.href = "../Member/dashboard.html";
+
+            } catch (err) {
+                console.error(err);
+                generalError.textContent = "Unable to connect to server.";
+            }
+        });
+
+    </script>
+</body>
+</html>

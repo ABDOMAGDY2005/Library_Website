@@ -1,0 +1,124 @@
+/* borrow_management.css - Keep only page-specific styles */
+
+/* Custom stat card colors for this page */
+.stat-icon.icon-borrowed {
+    background: linear-gradient(135deg, #ec4899, #db2777);
+}
+
+.stat-icon.icon-overdue {
+    background: linear-gradient(135deg, #ef4444, #b91c1c);
+}
+
+.stat-icon.icon-returned {
+    background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.stat-icon.fines {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+}
+
+/* Tabs styling */
+.tabs {
+    display: flex;
+    gap: 10px;
+    border-bottom: none;
+}
+
+.tab-btn {
+    padding: 8px 16px;
+    background: #f1f5f9;
+    border: none;
+    border-radius: 6px;
+    font-weight: 500;
+    color: var(--gray);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.tab-btn:hover {
+    background: #e2e8f0;
+    color: var(--dark);
+}
+
+.tab-btn.active {
+    background: var(--primary);
+    color: white;
+}
+
+/* Modal styling (if not already in common styles) */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 2rem;
+    border-radius: var(--radius);
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--gray);
+}
+
+.modal-close:hover {
+    color: var(--dark);
+}
+
+/* Status badges specific styling */
+.status-badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.status-borrowed {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.status-returned {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.status-overdue {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+/* Clickable rows */
+.data-table tbody tr {
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.data-table tbody tr:hover {
+    background-color: #f8fafc;
+}

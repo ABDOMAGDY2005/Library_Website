@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kaer Morhen Library</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="home.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <nav class="nav-container">
+                <a href="home.html" class="logo">
+                    <div class="logo-icon">
+                        <i class="fa-brands fa-wolf-pack-battalion"></i>
+                    </div>
+                    <span class="logo-text">Kaer Morhen</span>
+                </a>
+                
+                <div class="nav-links">
+                    <a href="home.html" class="nav-link active">Home</a>
+                    <a href="../Member/dashboard.html" class="nav-link">Dashboard</a>
+                    <a href="#contact-us" class="nav-link">Contact us</a>
+                    <a href="#about" class="nav-link">About</a>
+                </div>
+                
+                <div id="guest-nav" class="auth-buttons">
+                    <a href="login.html" class="btn btn-outline">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </a>
+                    <a href="register.html" class="btn btn-primary">
+                        <i class="fas fa-user-plus"></i> Sign Up
+                    </a>
+                </div>
+
+                <div id="member-nav" class="auth-buttons" style="display: none; align-items: center; gap: 15px;">
+                    
+                    <a href="../Admin/dashboard.html" id="admin-btn" class="btn btn-primary" style="display: none; background-color: #ef4444; border-color: #ef4444; padding: 8px 15px; font-size: 0.9rem;">
+                        <i class="fas fa-shield-alt"></i> Admin Panel
+                    </a>
+
+                    <button onclick="logout()" class="btn btn-outline" style="border-color: #ef4444; color: #ef4444; padding: 8px 15px; font-size: 0.9rem;">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <section class="hero animate-fade-in">
+            <div class="container">
+                <h1 class="hero-title">The World Of Kaer Morhen Library</h1>
+                <p class="hero-subtitle"> Discover countless books, connect with knowledge, and step into a world where learning never ends.</p>
+                
+               <div class="cta-buttons">
+    
+    <a href="register.html" class="btn btn-outline" id="hero-join-btn">
+        <i class="fas fa-user-plus"></i> Start Your Journey
+    </a>
+</div>
+            </div>
+        </section>
+
+<section class="featured-section">
+    <div class="container">
+        <div class="section-header">
+            <div>
+                <h2 class="section-title"><i class="fas fa-comments"></i> Members Reviews</h2>
+                <p class="section-subtitle">See what our members say about the library</p>
+            </div>
+        </div>
+
+        <div class="books-grid">
+
+            <!-- Review Card -->
+            <div class="book-card animate-fade-in">
+                <div class="book-badge badge-available">★★★★★</div>
+
+                <div class="book-content" style="padding-top: 20px;">
+                    <h3 class="book-title">Abdo Magdy</h3>
+                    <p class="book-author">
+                        <i class="fas fa-quote-left"></i>
+                        Amazing place with fast service!
+                    </p>
+
+                    <div class="book-meta">
+                        <div class="book-copies">
+                            Reviewed: <span class="available-count">2 days ago</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Review Card -->
+            <div class="book-card animate-fade-in">
+                <div class="book-badge badge-available">★★★★</div>
+
+                <div class="book-content" style="padding-top: 20px;">
+                    <h3 class="book-title">Mahmoud El-Damer</h3>
+                    <p class="book-author">
+                        <i class="fas fa-quote-left"></i>
+                        Amazing books are there!
+                    </p>
+
+                    <div class="book-meta">
+                        <div class="book-copies">
+                            Reviewed: <span class="available-count">2 days ago</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Review Card -->
+            <div class="book-card animate-fade-in">
+                <div class="book-badge badge-borrowed">★★★</div>
+
+                <div class="book-content" style="padding-top: 20px;">
+                    <h3 class="book-title">Mai Hassan</h3>
+                    <p class="book-author">
+                        <i class="fas fa-quote-left"></i>
+                        Great collection, but the borrow queue can be long.
+                    </p>
+
+                    <div class="book-meta">
+                        <div class="book-copies">
+                            Reviewed: <span class="available-count">1 week ago</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Review Card -->
+            <div class="book-card animate-fade-in">
+                <div class="book-badge badge-available">★★★★★</div>
+
+                <div class="book-content" style="padding-top: 20px;">
+                    <h3 class="book-title">Omar Khaled</h3>
+                    <p class="book-author">
+                        <i class="fas fa-quote-left"></i>
+                        Love the interface and how easy it is to borrow.
+                    </p>
+
+                    <div class="book-meta">
+                        <div class="book-copies">
+                            Reviewed: <span class="available-count">3 days ago</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+    </main>
+
+
+
+      <section id="contact-us" style="padding: 80px 0; background: #bfdbfe">
+        <div class="container">
+          <h2
+            class="section-title"
+            style="text-align: center; margin-bottom: 20px"
+          >
+            <i class="fas fa-envelope"></i> Contact us !
+          </h2>
+          <p
+            class="section-subtitle"
+            style="text-align: center; margin-bottom: 30px"
+          >
+          You can Contact us Through Our DMs
+          </p>
+<div style="display:flex; justify-content:center; margin-top:20px;">
+<form style="max-width: 400px;align-items: center;">
+            <input
+              type="text"
+              placeholder="Your Name"
+              style="
+                width: 100%;
+                padding: 12px;
+                margin-bottom: 15px;
+                border-radius: 8px;
+                border: 1px solid #ddd;
+              "
+            />
+            <input
+              type="email"
+              placeholder="Your Email"
+              style="
+                width: 100%;
+                padding: 12px;
+                margin-bottom: 15px;
+                border-radius: 8px;
+                border: 1px solid #ddd;
+              "
+            />
+            <textarea
+              placeholder="Type Your Request & We Will be in Touch ASAP !"
+              rows="5"
+              style="
+                width: 100%;
+                padding: 12px;
+                border-radius: 8px;
+                border: 1px solid #ddd;
+              "
+            ></textarea>
+            <button
+              style="
+                margin-top: 15px;
+                padding: 12px 25px;
+                border: none;
+                border-radius: 8px;
+                background: #60a5fa;
+                color: white;
+                cursor: pointer;
+                font-weight: 600;
+              "
+            >
+              Send N Go
+            </button>
+          </form>
+</div>
+          
+        </div>
+      </section>
+
+
+                <section id="about" style="padding: 80px 0; background: #fff">
+        <div class="container">
+          <h2
+            class="section-title"
+            style="text-align: center; margin-bottom: 20px"
+          >
+            <i class="fas fa-info-circle"></i> Who Are We ?
+          </h2>
+          <p
+            class="section-subtitle"
+            style="text-align: center; margin-bottom: 30px"
+          >
+            Who we are and what we offer
+          </p>
+          <p style="margin-top: 20px; color: #60a5fa;text-align: center;">
+            Kaer Morhen is a contemporary digital library built by Geralt Of Rivia AKA TLMO's Team to empower readers to learn,
+            explore, and connect through knowledge. Our goal is to make thousands of books available across multiple categories with ease.
+          </p>
+        </div>
+      </section>
+
+
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Kaer Morhen Library</h3>
+                    <p>Your gateway to endless knowledge and literary adventures.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="home.html">Home</a></li>
+                        <li><a href="#borrow">Borrow Online</a></li>
+                        <li><a href="#about">About Us</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <p><i class="fas fa-envelope"></i> info@KaerMorhen.com</p>
+                    <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                    <p><i class="fas fa-map-marker-alt"></i> 165 Arasaka Tower, Night City</p>
+                    <iframe
+                    width="250"
+                    height="150"
+                    style="border:0; border-radius:10px; margin-top: 10px;"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3152.228651274293!2d-122.419415!3d37.774929!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80858064b0f1e0ad%3A0x4e50a4d04db3e6e3!2sSan%20Francisco!5e0!3m2!1sen!2sus!4v1700000000000">
+                    </iframe>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Kaer Morhen Library. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../General/ApisCalls.js"></script>
+    <script>
+        // Function to check login status
+        function checkLoginStatus() {
+            const userEmail = localStorage.getItem("userEmail");
+            const isAdmin = localStorage.getItem("is_admin") == 1;
+
+            const guestNav = document.getElementById("guest-nav");
+            const memberNav = document.getElementById("member-nav");
+            const adminBtn = document.getElementById("admin-btn");
+
+            if (userEmail) {
+            // User is logged in
+            guestNav.style.display = "none";
+            memberNav.style.display = "flex";
+
+            if (isAdmin) {
+                adminBtn.style.display = "inline-block";
+            } else {
+                adminBtn.style.display = "none";
+            }
+            } else {
+            // User not logged in
+            guestNav.style.display = "flex";
+            memberNav.style.display = "none";
+            }
+        }
+
+        // Logout function
+        function logout() {
+            localStorage.removeItem("userEmail");
+            localStorage.removeItem("userPassword");
+            localStorage.removeItem("is_admin"); // fixed key name
+            checkLoginStatus(); // Update nav immediately
+            window.location.href = "../Home/home.html"; // redirect to home
+        }
+
+        // Function to update hero button dynamically
+        function updateHeroButton() {
+            const userEmail = localStorage.getItem("userEmail");
+            const heroBtn = document.getElementById("hero-join-btn"); // FIXED: Changed ID to match HTML
+
+            if (!heroBtn) return; // safety check
+
+            if (userEmail) {
+                // User is logged in -> go to dashboard
+                heroBtn.href = "../Member/dashboard.html";
+                heroBtn.innerHTML = `<i class="fas fa-tachometer-alt"></i> Enter Dashboard`;
+            } else {
+                // User not logged in -> go to register
+                heroBtn.href = "register.html";
+                heroBtn.innerHTML = `<i class="fas fa-user-plus"></i> Start Your Journey`;
+            }
+        }
+
+        // Run on page load
+        window.addEventListener("DOMContentLoaded", () => {
+            checkLoginStatus();
+            updateHeroButton();
+        });
+    </script>
+</body>
+</html>

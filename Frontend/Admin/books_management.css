@@ -1,0 +1,155 @@
+/* books_management.css - Page-specific styles only */
+
+/* Custom styles for the books table */
+.book-badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    display: inline-block;
+    text-align: center;
+    min-width: 100px;
+}
+
+/* Category badges */
+.category-badge {
+    background: var(--primary);
+    color: white;
+}
+
+/* Availability badges */
+.availability-badge {
+    font-weight: 600;
+}
+
+.availability-badge.available {
+    background-color: #d1fae5;
+    color: #065f46;
+}
+
+.availability-badge.low {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+.availability-badge.out {
+    background-color: #fee2e2;
+    color: #dc2626;
+}
+
+/* Book info styling */
+.book-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.book-icon {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 0.9rem;
+}
+
+.book-title {
+    font-weight: 500;
+    color: var(--dark);
+    margin-bottom: 4px;
+}
+
+.book-author {
+    font-size: 0.85rem;
+    color: var(--gray);
+}
+
+/* Loading state */
+.loading-spinner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    color: var(--gray);
+}
+
+.loading-spinner i {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Empty state */
+.empty-state {
+    text-align: center;
+    padding: 3rem;
+    color: var(--gray);
+}
+
+.empty-state i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+/* Responsive table adjustments */
+@media (max-width: 768px) {
+    .data-table {
+        font-size: 0.85rem;
+    }
+    
+    .data-table th,
+    .data-table td {
+        padding: 0.75rem 0.5rem;
+    }
+    
+    .book-badge {
+        padding: 3px 8px;
+        font-size: 11px;
+        min-width: 90px;
+    }
+    
+    .book-info {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
+    
+    .book-icon {
+        width: 32px;
+        height: 32px;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .data-table {
+        display: block;
+        overflow-x: auto;
+    }
+    
+    .book-badge {
+        min-width: 80px;
+        padding: 2px 6px;
+        font-size: 10px;
+    }
+}
+
+/* Animation for table rows */
+@keyframes fadeInRow {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeInRow 0.3s ease-out forwards;
+}

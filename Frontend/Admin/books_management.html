@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Book Management | Kaer Morhen Library</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="admin-common-styles.css" />
+    <!-- Page-specific CSS -->
+    <link rel="stylesheet" href="books_management.css" />
+</head>
+<body>
+    <!-- Mobile Menu Button -->
+    <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <i class="fas fa-bars"></i>
+    </button>
+    
+    <div class="admin-container">
+        <!-- Sidebar (SAME TEMPLATE) -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-icon">
+                    <i class="fa-brands fa-wolf-pack-battalion"></i>
+                </div>
+                <div>
+                    <div class="logo-text">Kaer Morhen</div>
+                    <div class="admin-role">Administrator</div>
+                </div>
+                <!-- Mobile Close Button -->
+                <button class="mobile-close-btn" id="mobileCloseBtn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Main</div>
+                    <a href="../Home/home.html" class="nav-item">
+                        <i class="fas fa-home nav-icon"></i>
+                        <span class="nav-text">Home</span>
+                    </a>
+                    <a href="dashboard.html" class="nav-item">
+                        <i class="fa-solid fa-gauge"></i>
+                        <span class="nav-text">Dashboard</span>
+                    </a>
+                    <a href="member_management.html" class="nav-item">
+                        <i class="fas fa-users nav-icon"></i>
+                        <span class="nav-text">Member Manage</span>
+                    </a>
+                    <a href="books_management.html" class="nav-item active">
+                        <i class="fas fa-book nav-icon"></i>
+                        <span class="nav-text">Book Manage</span>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Operations</div>
+                    <a href="reservations.html" class="nav-item">
+                        <i class="fas fa-bookmark nav-icon"></i>
+                        <span class="nav-text">Reservations</span>
+                    </a>
+                    <a href="borrow_management.html" class="nav-item">
+                        <i class="fas fa-exchange-alt nav-icon"></i>
+                        <span class="nav-text">Borrows</span>
+                    </a>
+                </div>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="admin-profile">
+                    <div class="admin-avatar">AM</div>
+                    <div class="admin-info">
+                        <h4>Admin Master</h4>
+                        <p>Super Administrator</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-header">
+                <div class="header-left">
+                    <h1>Book Management</h1>
+                    <p>Manage your library collection</p>
+                </div>
+
+                <div class="header-right">
+                    <button class="logout-btn" onclick="logout()" title="Logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </header>
+
+            <div class="dashboard-content">
+                <!-- Welcome Section -->
+                <div class="welcome-section animate-card">
+                    <h2>Book Management 📚</h2>
+                    <p>Manage your library collection efficiently</p>
+                </div>
+
+                <!-- Books Table -->
+                <div class="card animate-card delay-1">
+                    <div class="card-header">
+                        <div class="card-title">Books List</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-container">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>Author</th>
+                                        <th>Category</th>
+                                        <th>Total Copies</th>
+                                        <th>Available</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="booksTableBody">
+                                    <!-- Data will be loaded here -->
+                                    <tr>
+                                        <td colspan="5" style="text-align: center; padding: 2rem;">
+                                            <div class="loading-spinner">
+                                                <i class="fas fa-spinner fa-spin"></i> Loading books...
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Overlay for mobile menu -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <!-- Scripts -->
+    <script src="books_management.js"></script>
+    <script src="../General/auth.js"></script>
+    <script src="../General/mobile-menu.js"></script>
+    <script>
+        // Check authentication
+        document.addEventListener('DOMContentLoaded', function() {
+            if(!isLoggedIn() || localStorage.getItem('is_admin') != 1){
+                window.location.href = "../Home/home.html";
+            }
+        });
+    </script>
+</body>
+</html>

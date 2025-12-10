@@ -1,0 +1,81 @@
+:root {
+    --primary: #3b82f6; /* Blue */
+    --primary-dark: #1e40af;
+    --secondary: #60a5fa; /* Lighter Blue */
+    --accent: #0ea5e9; /* Cyan / Aqua */
+    --light: #e0f2fe; /* Very light blue */
+    --dark: #1e293b; /* Slate dark */
+    --gray: #64748b;
+    --gray-light: #e2e8f0;
+    --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+
+body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(135deg, #e0f2fe 0%, #bfdbfe 100%);
+    justify-content: center;
+    padding: 2rem 0;
+}
+
+.register-wrapper { width: 100%; display: flex; justify-content: center; }
+
+.register-card {
+    background: white; width: 100%; max-width: 480px; padding: 2.5rem;
+    border-radius: 16px; box-shadow: var(--shadow); border: 1px solid #fce7f3;
+}
+
+.brand-logo {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    margin-bottom: 1rem; color: var(--primary); font-size: 1.8rem; font-weight: 700;
+}
+.brand-logo i {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.brand-logo span {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+
+h2 { color: var(--dark); text-align: center; margin-bottom: 0.5rem; }
+.subtitle { color: var(--gray); text-align: center; margin-bottom: 2rem; font-size: 0.9rem; }
+
+.input-group { margin-bottom: 1.2rem; }
+.input-group label { display: block; margin-bottom: 0.4rem; color: var(--dark); font-weight: 500; font-size: 0.9rem; }
+
+.input-field { position: relative; }
+.input-field i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #9ca3af; }
+.input-field input {
+    width: 100%; padding: 12px 15px 12px 45px; border: 1px solid #e5e7eb;
+    border-radius: 10px; font-size: 0.95rem; outline: none; transition: 0.3s; background: #f9fafb;
+}
+.input-field input:focus { border-color: var(--primary); background: white; box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.1); }
+
+/* Password Strength */
+.strength-meter { height: 4px; background: #e5e7eb; margin-top: 8px; border-radius: 4px; overflow: hidden; }
+.strength-bar { height: 100%; width: 0; transition: 0.3s; }
+
+.error-text { color: var(--danger); font-size: 0.8rem; margin-top: 5px; display: block; }
+.error-message { color: var(--danger); text-align: center; margin-bottom: 1rem; font-size: 0.9rem; }
+
+.btn-register {
+    width: 100%; padding: 12px; margin-top: 1rem;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white; border: none; border-radius: 10px; font-size: 1rem; font-weight: 600;
+    cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.btn-register:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(236, 72, 153, 0.3); }
+.btn-register:disabled { opacity: 0.7; cursor: not-allowed; }
+
+.form-footer { margin-top: 1.5rem; text-align: center; font-size: 0.9rem; color: var(--gray); }
+.form-footer a { color: var(--primary); text-decoration: none; font-weight: 600; }
+.form-footer a:hover { text-decoration: underline; }
+
+/* Make date input faded like other fields */
+input[type="date"] { background: #f9fafb !important; color: #6b7280; opacity: 1; }
+input[type="date"]:focus { background: white !important; opacity: 1; }
+input[type="date"]::-webkit-calendar-picker-indicator { opacity: 0.5; cursor: pointer;}
