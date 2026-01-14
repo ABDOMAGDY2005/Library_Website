@@ -4,7 +4,6 @@ const router = express.Router();
 const adminMiddleware = require("../middlewares/admin");
 const bookController = require("../controllers/bookController");
 const borrowController = require("../controllers/borrowController");
-const retController = require("../controllers/returnController");
 const reserveController = require("../controllers/reserveController");
 
 //
@@ -15,22 +14,22 @@ const reserveController = require("../controllers/reserveController");
 router.get("/", bookController.getAll);
 
 // Get books borrowed by logged-in user
-router.get("/borrowed", bookController.getBorrowedBooks);
+router.get("/borrowed", borrowController.getBorrowedBooksByUser);
 
 // Get all borrowed books (ADMIN)
-router.get("/borrowed/all", adminMiddleware, bookController.getAllBorrowedBooks);
+router.get("/borrowed/all", adminMiddleware, borrowController.getAllBorrowedBooks);
 
 // Get books reserved by logged-in user
-router.get("/reserved", bookController.getReservedBooks);
+router.get("/reserved", reserveController.getReservedBooksByUser);
 
 // Get all reserved books (ADMIN)
-router.get("/reserved/all", adminMiddleware, bookController.getAllReservedBooks);
+router.get("/reserved/all", adminMiddleware, reserveController.getAllReservedBooks);
 
 // Get books by author
-router.get("/author/:authorId", bookController.getBooksByAuthor);
+router.get("/author/:authorId", bookController.getBooksByAuthorId);
 
 // Get books by category
-router.get("/category/:categoryId", bookController.getBooksByCategory);
+router.get("/category/:categoryId", bookController.getBooksByCategoryId);
 
 // Get a single book by ID
 router.get("/:id", bookController.getById);

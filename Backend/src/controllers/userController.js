@@ -1,9 +1,10 @@
 const db = require('../db');
+const UserModel = require('../Models/Users');
 
 exports.getAll = async (req, res) => {
     try{
 
-        const [rows] = await db.query('select ID, Name, Email, Birth_Date, is_Admin from users');
+        const rows = await UserModel.getAllUsers();
 
         res.status(200).json(rows);
 
@@ -20,18 +21,20 @@ exports.getById = async (req, res) => {
         const Id = Number(req.params.id);
 
         if(isNaN(Id)){
-            res.sendStatus(404);
-            return;
+          
+          return res.sendStatus(404);
+          
         }
 
-        const [rows] = await db.query('select ID, Name, Email, Birth_Date, is_Admin from users where ID = ?',[Id]);
+        const user = await UserModel.getUserById(Id);
 
-        if(rows.length === 0){
-            res.sendStatus(404);
-            return;
+        if(!user){
+
+            return res.sendStatus(404);
+            
         }
 
-        res.status(200).json(rows);
+        res.status(200).json(user);
 
     }catch(err){
 
@@ -41,49 +44,30 @@ exports.getById = async (req, res) => {
 };
 
 exports.updateUser = async (req, res) => {
-    const id = req.user.id;
-    const { new_name, new_email, new_password, new_birth_date } = req.body || {};
-    
-    try {
+  const id = req.user.id;
+  const { new_name, new_email, new_password, new_birth_date } = req.body || {};
 
-    // 1️⃣ Get the existing user
-    const [userRows] = await db.query(
-      "SELECT * FROM users WHERE ID = ?",
-      [id]
-    );
+  try {
+    // Get existing user
+    const user = await UserModel.getUserById(id);
 
-    if (userRows.length === 0) {
-      return res.status(404).json({ error: "User not found." });
+    if (!user) {
+      return res.sendStatus(404);
     }
 
-    const user = userRows[0];
-    
-    // 2️⃣ Merge old & new fields 
+    // Merge old & new data
     const updatedUser = {
-      name: new_name || user.Name,
-      email: new_email || user.Email,
-      password: new_password || user.Password,
-      birth_date: new_birth_date || user.Birth_Date
+      name: new_name || user.name,
+      email: new_email || user.email,
+      password: new_password || user.password,
+      birth_date: new_birth_date || user.birth_date
     };
 
-    // 3️⃣ Update query
-    const [result] = await db.query(
-      `
-        UPDATE users
-        SET name = ?, email = ?, password = ?, birth_date = ?
-        WHERE ID = ?;
-      `,
-      [
-        updatedUser.name,
-        updatedUser.email,
-        updatedUser.password,
-        updatedUser.birth_date,
-        id
-      ]
-    );
+    // Update in DB
+    await UserModel.updateUserById(id, updatedUser);
 
     return res.status(200).json({
-      message: "User updated successfully.",
+      message: "User updated successfully",
       updatedUser
     });
 
@@ -99,96 +83,82 @@ exports.updateUser = async (req, res) => {
 };
 
 exports.makeAdmin = async (req, res) => {
-    const userId = Number(req.params.id);
+  const userId = Number(req.params.id);
 
-    if(isNaN(userId)){
-        res.sendStatus(404);
-        return;
+  if (isNaN(userId)) {
+    return res.sendStatus(404);
+  }
+
+  try {
+    const user = await UserModel.getUserById(userId);
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found." });
     }
 
-    try {
-        const [userRows] = await db.query(
-            "SELECT * FROM users WHERE ID = ?",
-            [userId]
-        );
+    await UserModel.setAdminStatus(userId, true);
 
-        if (userRows.length === 0) {
-            return res.status(404).json({ error: "User not found." });
-        }
+    return res.status(200).json({
+      message: "User promoted to admin successfully.",
+      promotedUserId: userId
+    });
 
-        await db.query(
-            `UPDATE users SET is_admin = 1 WHERE ID = ?`,
-            [userId]
-        );
-
-        return res.status(200).json({
-            message: "User promoted to admin successfully.",
-            promotedUserId: userId
-        });
-
-    } catch (err) {
-        console.error(err);
-        return res.status(500).json({ error: "Internal server error." });
-    }
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: "Internal server error." });
+  }
 };
 
 exports.removeAdmin = async (req, res) => {
-    const requesterId = req.user.id;        // Who is performing the action
-    const userId = Number(req.params.id);   // Who is being demoted
+  const requesterId = req.user.id;
+  const userId = Number(req.params.id);
 
-    if(isNaN(userId)){
-        res.sendStatus(404);
-        return;
+  if (isNaN(userId)) {
+    return res.sendStatus(404);
+  }
+
+  try {
+    // Prevent self-demotion
+    if (userId == requesterId) {
+      return res.status(400).json({
+        error: "You cannot remove your own admin rights."
+      });
     }
 
-    try {
-        // 1️⃣ Prevent admin from removing their own admin rights
-        if (parseInt(userId) === parseInt(requesterId)) {
-            return res.status(400).json({
-                error: "You cannot remove your own admin rights."
-            });
-        }
+    const user = await UserModel.getUserById(userId);
 
-        // 2️⃣ Check if the target user exists
-        const [userRows] = await db.query(
-            "SELECT * FROM users WHERE ID = ?",
-            [userId]
-        );
-
-        if (userRows.length === 0) {
-            return res.status(404).json({ error: "User not found." });
-        }
-
-        // 3️⃣ Remove admin role
-        await db.query(
-            `UPDATE users SET is_admin = 0 WHERE ID = ?`,
-            [userId]
-        );
-
-        return res.status(200).json({
-            message: "Admin rights removed successfully.",
-            userId
-        });
-
-    } catch (err) {
-        console.error(err);
-        return res.status(500).json({ error: "Internal server error." });
+    if (!user) {
+      return res.status(404).json({ error: "User not found." });
     }
+
+    await UserModel.setAdminStatus(userId, false);
+
+    return res.status(200).json({
+      message: "Admin rights removed successfully.",
+      userId
+    });
+
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: "Internal server error." });
+  }
 };
+
 
 exports.getMyInfo = async (req, res) => {
   try {
     const userId = req.user.id;
 
-    const [rows] = await db.query("SELECT id,name,email,birth_date FROM Users WHERE id = ?", [userId]);
+    const user = await UserModel.getUserById(userId);
 
-    if (rows.length === 0) {
+    if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    res.json(rows[0]);
-  } catch (error) {
-    console.error(error);
+    res.json(user);
+
+  } catch (err) {
+    console.error(err);
     res.status(500).json({ message: "Server error" });
   }
 };

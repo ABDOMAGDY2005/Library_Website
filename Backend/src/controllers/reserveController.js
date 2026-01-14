@@ -1,10 +1,11 @@
 const db = require("../db");
+const ReserveModel = require('../Models/Reserve');
 
 exports.reserveBook = async (req, res) => {
-  const userId = req.user.id;
-  const bookId = req.body.bookId;
-
   try {
+    const userId = req.user.id;
+    const bookId = req.body.bookId;
+    
     const [bookRows] = await db.query(
       "SELECT Available_Copies FROM Books WHERE ID = ?",
       [bookId]
@@ -43,10 +44,39 @@ exports.cancelReserve = async (req,res) => {
             [id]
         );
 
-        res.sendStatus(200);  // ✅ return ONLY the query result
+        res.sendStatus(200);
 
     } 
     catch (err) {
     res.status(400).json({ error: err.message });
   }
-}
+};
+
+exports.getAllReservedBooks = async (req, res) => {
+  try {
+
+    const rows = await ReserveModel.getAllReservedBooks();
+
+    res.json(rows);
+
+  } catch (err) {
+
+    res.status(500);
+
+  }
+};
+
+exports.getReservedBooksByUser = async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    const rows = await ReserveModel.getReservedBooksByUserId(userId);
+
+    res.json(rows);
+
+  } catch (err) {
+    
+    res.status(500);
+
+  }
+};

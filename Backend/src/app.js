@@ -29,8 +29,6 @@ app.use("/api/auth", authRoutes);
 app.use(authMiddleware); // all routes below require authentication
 
 app.use("/api/books", bookRoutes);
-app.use("/api/authors", authorRoutes);
-app.use("/api/categories", categoryRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/stats", statsRoutes);
 
